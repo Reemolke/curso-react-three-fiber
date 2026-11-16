@@ -5,10 +5,11 @@ No es un temario para leer: cada concepto tiene una demo viva, un editor donde e
 final que obliga a usarlo todo junto.
 
 - **14 módulos · 90 lecciones · proyecto final en 8 fases.**
+- **Publicado:** <https://reemolke.github.io/curso-react-three-fiber/>
 - Cada lección: objetivo, explicación corta, demo R3F real, «Pruébalo tú» con Sandpack, errores típicos,
   quiz de 3–5 preguntas, recursos y tiempo/nivel.
-- Todo el 3D que se ve está generado por el propio proyecto (**66 KB de modelos, 720 KB de texturas,
-  401 KB de HDRIs, 146 KB de audio**), sin assets de terceros y con la licencia registrada en `ASSETS.md`.
+- Todo el 3D que se ve está generado por el propio proyecto (**66 KB de modelos, 720 KB de texturas + 23 KB en
+  KTX2, 401 KB de HDRIs, 146 KB de audio**), sin assets de terceros y con la licencia registrada en `ASSETS.md`.
 
 ---
 
@@ -265,14 +266,37 @@ Carga inicial resultante: ~290 kB comprimidos (185 kB de aplicación + 85 kB de 
 raíz de un dominio, en un subdirectorio y en GitHub Pages** (`/nombre-del-repo/`) sin tocar nada ni configurar
 rewrites.
 
-### GitHub Pages (incluido)
+### GitHub Pages (publicado)
 
-El workflow está en `.github/workflows/desplegar.yml`. Al empujar a `main`:
+**En producción:** <https://reemolke.github.io/curso-react-three-fiber/> — rama `gh-pages`, servida con
+`base: './'`, sin rewrites ni 404 personalizados.
 
-1. `npm ci` y `npm run build`.
-2. Sube `dist/` como artefacto de Pages y lo publica.
+El despliegue activo es por rama: se compila en local y se empuja `dist/` a `gh-pages`.
 
-Solo hay que activar *Settings → Pages → Source: GitHub Actions* en el repositorio.
+```bash
+npm run build
+# copia dist/ a un repo temporal y fuerza el push de la rama
+```
+
+Esa rama es el sitio compilado, no el código: el código vive en `main`. Para volver a publicar tras un cambio:
+
+```powershell
+npm run build
+$tmp = "$env:LOCALAPPDATA\Temp\ghpages-r3f"
+Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
+New-Item -ItemType Directory -Force $tmp | Out-Null
+Copy-Item -Path "dist\*" -Destination $tmp -Recurse -Force
+Set-Location $tmp
+git init -b gh-pages -q
+git add -A; git commit -q -m "Sitio compilado"
+git push -f https://github.com/Reemolke/curso-react-three-fiber.git gh-pages
+```
+
+Alternativa con Actions: `despliegue/desplegar-pages.yml` es el workflow listo (`npm ci` → `npm run build` →
+`upload-pages-artifact` → `deploy-pages`). Está fuera de `.github/workflows/` a propósito: el token de `gh` con el
+que se publicó no tiene el permiso `workflow`, y GitHub rechaza cualquier push que cree un archivo de workflow.
+Con `gh auth refresh -s workflow`, se mueve a `.github/workflows/desplegar.yml`, se activa *Settings → Pages →
+Source: GitHub Actions* y desde ahí cada push a `main` publica solo.
 
 ### Vercel / Netlify
 

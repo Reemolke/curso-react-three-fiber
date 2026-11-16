@@ -1,6 +1,6 @@
 # ASSETS.md — Licencias y procedencia de todos los recursos
 
-> Última revisión: **16 de noviembre de 2026**, con el proyecto terminado y los ficheros de `public/` contados uno a uno.
+> Última revisión: **17 de noviembre de 2026**, con el proyecto terminado y los ficheros de `public/` contados uno a uno.
 > Estado de cada recurso: `planificado` → `generado` → `verificado`.
 
 Este documento es el registro legal del curso: **todo lo que se sirve desde `public/` está aquí**, con autor,
@@ -23,7 +23,7 @@ licencia, fuente y si exige atribución.
 |---|---|---|---|---|
 | **CC BY 4.0** | Modelos, texturas, HDRIs, audio y tipografías generadas por el curso | Sí (`Curso R3F`) | Sí | Sí |
 | **SIL OFL 1.1** | Tipografía Roboto (`@fontsource/roboto`) | Sí, con la licencia | Sí, con la licencia | Sí |
-| **Apache 2.0** | Decodificadores Draco y Basis Universal que distribuye three.js | Sí, con el aviso | Sí | Sí |
+| **Apache 2.0** | Decodificadores Draco y Basis Universal que distribuye three.js; `toktx` 4.4.2 (herramienta de compilación, no se redistribuye) | Sí, con el aviso | Sí | Sí |
 | **MIT** | three.js, React Three Fiber, drei, Rapier, postprocessing | No requerida | Sí | Sí |
 
 **Decisión de diseño (y no solo legal):** los modelos **no se descargan de Sketchfab ni de Poly Pizza**. Se generan
