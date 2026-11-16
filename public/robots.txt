@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# El curso se sirve como sitio estático con rutas por hash, así que no hay
+# rutas privadas que ocultar. El sitemap se declara en el README (GitHub Pages).

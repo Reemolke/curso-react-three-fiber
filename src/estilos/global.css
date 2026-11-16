@@ -1,0 +1,185 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ *
+ * Tokens de diseño
+ * Paleta "taller técnico": fondo casi negro azulado, superficies en
+ * capas, un acento ámbar (el rover / el taller) y un azul frío para
+ * datos y enlaces. Todo en OKLCH para que las mezclas sean limpias.
+ * ------------------------------------------------------------------ */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+
+  --color-fondo: oklch(0.16 0.014 265);
+  --color-fondo-alto: oklch(0.2 0.016 265);
+  --color-superficie: oklch(0.225 0.017 265);
+  --color-superficie-alta: oklch(0.27 0.018 265);
+  --color-borde: oklch(0.35 0.02 265);
+  /* Los tres niveles de texto están calibrados para pasar AA (4,5:1) incluso
+     en el fondo más claro de la jerarquía (`superficie-alta`, L 0,27) y a
+     10–11 px. `tenue` es texto pequeño de verdad (números de lección, notas),
+     no un adorno: no puede bajar de ahí. */
+  --color-texto: oklch(0.94 0.008 265);
+  --color-texto-suave: oklch(0.78 0.014 265);
+  --color-texto-tenue: oklch(0.66 0.016 265);
+
+  --color-acento: oklch(0.79 0.15 72);
+  --color-acento-alto: oklch(0.86 0.14 78);
+  --color-acento-bajo: oklch(0.62 0.13 62);
+  --color-frio: oklch(0.72 0.13 245);
+  --color-exito: oklch(0.75 0.15 155);
+  --color-aviso: oklch(0.8 0.14 85);
+  --color-error: oklch(0.68 0.19 22);
+
+  --radius-caja: 0.875rem;
+  --shadow-flotante: 0 1px 0 0 oklch(1 0 0 / 0.04) inset, 0 12px 32px -12px oklch(0 0 0 / 0.6);
+
+  --animate-aparecer: aparecer 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes aparecer {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Modo claro: invertimos la escala manteniendo la jerarquía. */
+:root:not(.dark) {
+  --color-fondo: oklch(0.985 0.003 265);
+  --color-fondo-alto: oklch(0.96 0.004 265);
+  --color-superficie: oklch(1 0 0);
+  --color-superficie-alta: oklch(0.968 0.004 265);
+  --color-borde: oklch(0.89 0.006 265);
+  --color-texto: oklch(0.22 0.012 265);
+  --color-texto-suave: oklch(0.42 0.014 265);
+  --color-texto-tenue: oklch(0.5 0.014 265);
+  --color-acento: oklch(0.55 0.14 55);
+  --color-acento-alto: oklch(0.55 0.14 50);
+  --color-acento-bajo: oklch(0.72 0.13 68);
+  --color-frio: oklch(0.52 0.16 250);
+  --color-exito: oklch(0.52 0.14 155);
+  --color-aviso: oklch(0.58 0.13 70);
+  --color-error: oklch(0.53 0.2 25);
+  --shadow-flotante: 0 1px 0 0 oklch(1 0 0) inset, 0 10px 30px -14px oklch(0.2 0 0 / 0.25);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-borde);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-acento);
+    color: oklch(0.18 0.02 60);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-acento);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Barra de scroll discreta */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-borde) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-borde);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--color-texto-tenue);
+    background-clip: content-box;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  /* Rejilla de fondo tipo plano técnico */
+  .fondo-plano {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--color-borde) 45%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--color-borde) 45%, transparent) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .tarjeta {
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radius-caja);
+  }
+
+  /* Contenedor de las demos: marco con barra de título */
+  .marco-demo {
+    background-color: var(--color-fondo-alto);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radius-caja);
+    overflow: hidden;
+  }
+}
+
+@layer utilities {
+  .texto-balanceado {
+    text-wrap: balance;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

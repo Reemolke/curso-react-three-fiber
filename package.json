@@ -1,0 +1,47 @@
+{
+  "name": "curso-react-three-fiber",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Curso práctico de React Three Fiber y three.js, de cero a avanzado, en español",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173",
+    "typecheck": "tsc --noEmit",
+    "assets:modelos": "node assets-src/modelos/generar.mjs",
+    "assets:texturas": "node assets-src/texturas.mjs",
+    "assets:hdri": "node assets-src/hdri.mjs",
+    "assets:optimizar": "node assets-src/optimizar.mjs",
+    "assets:audio": "node assets-src/audio.mjs",
+    "assets:fuentes": "node assets-src/fuentes/copiar.mjs"
+  },
+  "dependencies": {
+    "@codesandbox/sandpack-react": "~2.20.0",
+    "@react-spring/three": "~10.1.2",
+    "@react-three/drei": "~10.7.9",
+    "@react-three/fiber": "~9.8.2",
+    "@react-three/postprocessing": "~3.2.2",
+    "@react-three/rapier": "~2.2.0",
+    "postprocessing": "~6.39.6",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "three": "~0.187.0",
+    "zustand": "~5.1.0"
+  },
+  "devDependencies": {
+    "@fontsource/roboto": "^5.3.0",
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "^4.5.1",
+    "@gltf-transform/functions": "^4.5.1",
+    "@tailwindcss/vite": "~4.3.5",
+    "@types/react": "~19.3.0",
+    "@types/react-dom": "~19.3.0",
+    "@types/three": "~0.187.0",
+    "@vitejs/plugin-react": "~6.2.1",
+    "draco3dgltf": "^1.5.7",
+    "tailwindcss": "~4.3.5",
+    "typescript": "5.9.3",
+    "vite": "~8.3.6"
+  }
+}

@@ -1,0 +1,9 @@
+﻿.slim/deepwork/
+node_modules
+dist
+.DS_Store
+# Artefactos de verificación local (Lighthouse y capturas de Playwright)
+.lighthouse.json
+.lighthouse.html
+screenshots/
+.playwright-mcp/
