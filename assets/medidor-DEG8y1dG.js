@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-BWaJ3C7D.js";import{_ as t}from"./react-C2KsiCsq.js";import{$ as n}from"./three-BVG2VSL3.js";var r=e(t(),1);function i({alMedir:e}){let t=(0,r.useRef)(0),i=(0,r.useRef)(0);return n((n,r)=>{t.current+=r,i.current+=1,t.current>=.5&&(e(Math.round(i.current/t.current)),t.current=0,i.current=0)}),null}export{i as t};

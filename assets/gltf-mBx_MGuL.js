@@ -1,0 +1,1 @@
+import{H as e}from"./three-BVG2VSL3.js";import{r as t}from"./rutas-DZ0AlAW-.js";e.setDecoderPath(t);
