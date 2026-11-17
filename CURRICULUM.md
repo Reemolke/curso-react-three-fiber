@@ -166,7 +166,8 @@ React por segundo.
 ## Módulo 8 — Modelos 3D: el flujo completo (10 lecciones · 9 h)
 
 > El corazón del curso. Es el módulo que casi ningún curso de R3F cubre bien: aquí se va **del archivo a la escena
-> y de la escena al archivo**, incluida la creación del modelo en Blender y su optimización medida.
+> y de la escena al archivo**, incluida la guía de modelado en Blender (con `.glb` descargables para practicar)
+> y su optimización medida.
 
 | # | Lección | Objetivo | Demo | Nivel | Tiempo |
 |---|---|---|---|---|---|
@@ -175,10 +176,10 @@ React por segundo.
 | 8.3 | `gltfjsx` | Convertir un GLB en un componente React y entender el código que genera. | Comparación entre `<primitive>` y el componente generado, con el código lado a lado | medio | 55 min |
 | 8.4 | Inspeccionar y manipular el grafo | Recorrer nodos, cambiar materiales, clonar y aislar piezas. | Selector de piezas de un modelo real: resaltar, ocultar, recolorar, clonar | medio | 65 min |
 | 8.5 | Animaciones con `useAnimations` | Reproducir, mezclar y encadenar clips. | Máquina de estados de animación con `fadeIn`/`crossFade` entre clips | alto | 70 min |
-| 8.6 | Blender I: modelado básico | Modelar una pieza sencilla con extrusión, loop cuts, bisel y modificador espejo. | Guía paso a paso con diagramas + archivo `.blend` de partida + visor del `.glb` resultante | medio | 90 min |
+| 8.6 | Blender I: modelado básico | Modelar una pieza sencilla con extrusión, loop cuts, bisel y modificador espejo. | Guía paso a paso + `tuerca.glb` y `caja.glb` descargables para importar + visor | medio | 90 min |
 | 8.7 | Blender II: UVs y materiales PBR | Desplegar UVs, pintar un material metallic‑roughness y exportar bien. | Diagramas de desplegado + comparación de exportaciones correcta/incorrecta | medio | 90 min |
-| 8.8 | Blender III: rigging y animación | Riggear con armature, pesar vértices y exportar clips con nombre. | Guía + `.blend` con el rig ya hecho + reproductor de los clips exportados | alto | 100 min |
-| 8.9 | Optimizar: gltf-transform, Draco y KTX2 | Reducir peso sin destruir calidad, y **medir** el resultado. | Tabla real medida: original vs Draco vs KTX2 vs ambos, con peso, triángulos y tiempo de decodificación | alto | 80 min |
+| 8.8 | Blender III: rigging y animación | Riggear con armature, pesar vértices y exportar clips con nombre. | Guía + `robot.glb` y `rover.glb` descargables + reproductor de los clips exportados | alto | 100 min |
+| 8.9 | Optimizar: gltf-transform, Draco y KTX2 | Reducir peso sin destruir calidad, y **medir** el resultado. | Tablas medidas con las herramientas reales: original vs Draco por modelo, y PNG vs KTX2 ETC1S/UASTC por textura | alto | 80 min |
 | 8.10 | Los 10 errores con modelos | Diagnosticar los fallos clásicos con un procedimiento. | Las 10 escenas rotas, una por error, con su síntoma y su arreglo | medio | 70 min |
 
 **Punto de fricción típico:** el alumno descarga un modelo y no sabe qué contiene. La lección 8.4 y el **visor de
@@ -223,7 +224,7 @@ herramienta permanente, no como demo de una lección.
 | 11.4 | `shaderMaterial` en R3F | Crear un material propio con uniforms animados y `extend`. | Material con uniforms controlables por sliders | alto | 65 min |
 | 11.5 | Efectos prácticos | Implementar fresnel, dissolve, scan holográfico y desplazamiento. | Cuatro efectos conmutables sobre el mismo modelo | alto | 75 min |
 | 11.6 | `onBeforeCompile` | Modificar un material estándar sin perder luces ni sombras. | Comparación entre material propio y material estándar parcheado | alto | 65 min |
-| 11.7 | Render targets y `useFBO` | Renderizar a una textura y usarla como fuente (espejos, portales, minimapas). | Minimapa en vivo y efecto de espejo con `useFBO` | alto | 55 min |
+| 11.7 | Render targets y `useFBO` | Renderizar a una textura y usarla como fuente (espejos, portales, minimapas). | Minimapa en vivo con `useFBO` y espejo real con `MeshReflectorMaterial` | alto | 55 min |
 | 11.8 | WebGPU y TSL: el mapa del futuro | Situar WebGPU y Three Shading Language sin depender de ellos. | Escena idéntica en WebGL y, si el navegador lo soporta, WebGPU | alto | 45 min |
 
 ---
@@ -301,7 +302,7 @@ como un ejercicio artificial.
 
 | Requisito | Cómo se cumple | Módulo que lo enseña |
 |---|---|---|
-| Modelos propios optimizados con Draco/KTX2, cargados con gltfjsx | Rover y taller modelados en Blender con script reproducible, exportados a GLB, comprimidos y medidos | 8 |
+| Modelos propios optimizados con Draco/KTX2, cargados con gltfjsx | Rover y taller generados por un escritor de glTF propio en Node (script reproducible, nombres de nodo reales), exportados a GLB, comprimidos con Draco y medidos | 8 |
 | Animaciones y partes intercambiables | Brazo con clip *deploy/stow*, ruedas con giro, cuatro slots de módulo | 8.5, 5.5 |
 | Materiales PBR + HDRI + sombras | HDRI CC0 local, `Environment`, `ContactShadows` + sombra direccional | 4, 7 |
 | Raycasting, selección, cámara y transiciones animadas | Hover/resaltado, selección por clic, vuelo de cámara por slot | 6 |
@@ -345,7 +346,7 @@ está disponible como código de solución navegable en la web.
 | Carga de GLB, `Suspense`, `gltfjsx` | 8.2, 8.3, 13.3 |
 | Inspección del grafo, piezas intercambiables | 8.4 |
 | Animaciones del brazo y las ruedas | 8.5, 5.5, 5.4 |
-| Modelado del rover en Blender | 8.6, 8.7, 8.8 |
+| Modelado del rover: guía de Blender + pipeline de modelos del curso | 8.6, 8.7, 8.8 |
 | Draco y KTX2 | 8.9 |
 | Hover, clic, selección, arrastre | 6.1, 6.2, 6.7 |
 | Teclado (modo prueba) | 6.5 |
