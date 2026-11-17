@@ -241,6 +241,18 @@ del propio addon en Blender headless**. Las conclusiones prácticas:
   Necesita el *transcoder* `basis_transcoder.wasm` en el cliente.
 - **Verificado en el equipo:** `KTX-Software 4.4.2` instalado, `toktx.exe` disponible en
   `C:\Program Files\KTX-Software\bin`. Eso permite generar KTX2 reales y medir el resultado.
+- **Medido en este curso** (no estimado), con `toktx` 4.4.2:
+  | Textura | PNG | KTX2 | Diferencia |
+  |---|---|---|---|
+  | `hormigon-color` 512², ETC1S sin mips | 70,3 KB | 13,7 KB | −80 % |
+  | `hormigon-color` 512², ETC1S con mips | 70,3 KB | 23,0 KB | −67 % |
+  | `hormigon-normal` 256², ETC1S `--normal_mode` | 90,9 KB | 18,8 KB | −79 % |
+  | `madera-color` 512², UASTC + zstd | 134,0 KB | 148,5 KB | **+11 %** |
+
+  Dos decisiones que salen de la medición: las normales necesitan `--assign_oetf linear --normal_mode` (sin
+  eso, `toktx` se niega: *«input file(s) are not linear»*), y KTX2 **no siempre ahorra**: UASTC es más fiel y en
+  una textura sintética sale más grande que el PNG. Lo que sí mejora siempre es la memoria de vídeo, porque el
+  `.ktx2` se transcodifica a un formato comprimido nativo de la GPU en vez de subir un RGBA8 de 1 MB.
 
 ---
 
